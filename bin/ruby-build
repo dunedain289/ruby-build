@@ -291,8 +291,8 @@ after_install_package() {
 }
 
 fix_directory_permissions() {
-  # Ensure installed directories are not world-writable to avoid Bundler warnings
-  find "$PREFIX_PATH" -type d -exec chmod go-w {} \;
+  # Ensure installed directories *ARE* group writable and setgid
+  find "$PREFIX_PATH" -type d -exec chmod g+rwXs {} \;
 }
 
 require_gcc() {
