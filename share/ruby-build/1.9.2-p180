@@ -5,18 +5,16 @@ before_install_package() {
     (
         patch -p1 <<-"END_PATCH"
 diff --git a/file.c b/file.c
-index eead657..b005079 100644
+index adc49ef..b88b24f 100644
 --- a/file.c
 +++ b/file.c
-@@ -5006,9 +5006,9 @@ path_check_0(VALUE path, int execpath)
+@@ -4959,8 +4959,8 @@ path_check_0(VALUE path, int execpath)
  	    && !(p && execpath && (st.st_mode & S_ISVTX))
  #endif
  	    && !access(p0, W_OK)) {
--	    rb_warn("Insecure world writable dir %s in %sPATH, mode 0%"
--		    PRI_MODET_PREFIX"o",
+-	    rb_warn("Insecure world writable dir %s in %sPATH, mode 0%o",
 -		    p0, (execpath ? "" : "LOAD_"), st.st_mode);
-+	    // rb_warn("Insecure world writable dir %s in %sPATH, mode 0%"
-+		  //   PRI_MODET_PREFIX"o",
++	    // rb_warn("Insecure world writable dir %s in %sPATH, mode 0%o",
 +		  //   p0, (execpath ? "" : "LOAD_"), st.st_mode);
  	    if (p) *p = '/';
  	    RB_GC_GUARD(path);
