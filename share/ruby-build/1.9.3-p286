@@ -1,26 +1,29 @@
 install_package "yaml-0.1.4" "http://pyyaml.org/download/libyaml/yaml-0.1.4.tar.gz"
 before_install_package() {
-  patch -p1 <<-"END_PATCH"
+    (
+        patch -p1 <<-"END_PATCH"
 diff --git a/file.c b/file.c
 index eead657..b005079 100644
 --- a/file.c
 +++ b/file.c
 @@ -5006,9 +5006,9 @@ path_check_0(VALUE path, int execpath)
-            && !(p && execpath && (st.st_mode & S_ISVTX))
+ 	    && !(p && execpath && (st.st_mode & S_ISVTX))
  #endif
-            && !access(p0, W_OK)) {
--           rb_warn("Insecure world writable dir %s in %sPATH, mode 0%"
--                   PRI_MODET_PREFIX"o",
--                   p0, (execpath ? "" : "LOAD_"), st.st_mode);
-+           // rb_warn("Insecure world writable dir %s in %sPATH, mode 0%"
-+                 //   PRI_MODET_PREFIX"o",
-+                 //   p0, (execpath ? "" : "LOAD_"), st.st_mode);
-            if (p) *p = '/';
-            RB_GC_GUARD(path);
-            return 0;
+ 	    && !access(p0, W_OK)) {
+-	    rb_warn("Insecure world writable dir %s in %sPATH, mode 0%"
+-		    PRI_MODET_PREFIX"o",
+-		    p0, (execpath ? "" : "LOAD_"), st.st_mode);
++	    // rb_warn("Insecure world writable dir %s in %sPATH, mode 0%"
++		  //   PRI_MODET_PREFIX"o",
++		  //   p0, (execpath ? "" : "LOAD_"), st.st_mode);
+ 	    if (p) *p = '/';
+ 	    RB_GC_GUARD(path);
+ 	    return 0;
 END_PATCH
+    )
+
 }
 install_package "ruby-1.9.3-p286" "http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-p286.tar.gz"
 before_install_package() {
-  local stub = 1
+  local stub=1
 }
